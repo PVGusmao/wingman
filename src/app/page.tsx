@@ -3,7 +3,7 @@
 import { JSX } from "react";
 import { PiChatTeardropFill } from "react-icons/pi";
 import {NextUIProvider} from "@nextui-org/react";
-import LBChart from "@/components/LBChart";
+import ComparisonChart from "@/components/PastPeriodChart";
 
 export interface ICardData {
   id: number;
@@ -24,7 +24,7 @@ const cardData: ICardData = {
 export default function Home() {
   return (
     <NextUIProvider>
-      <LBChart />
+      <ComparisonChart />
     </NextUIProvider>
   );
 }
