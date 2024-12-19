@@ -24,13 +24,14 @@ const sideBarIcons = [{
 }]
 
 export default function SideBar() {
-   const [selectedSideIcon, setSelectedSideIcon] = useState(1);
+  const [selectedSideIcon, setSelectedSideIcon] = useState(1);
+
+  function handleClick(id: number) {
+    setSelectedSideIcon(id);
+  }
   
-    function handleClick(id: number) {
-      setSelectedSideIcon(id);
-    }
   return (
-    <main className="bg-[#115E56] h-screen w-[60px] flex flex-col items-center">
+    <main className="bg-[#115E56] h-[200vh] w-[60px] flex flex-col items-center">
       <Image className="rounded-[5px] mt-[30px]" src={logo} alt="logo" width={33} height={33} />
 
       <div className="w-[50%] h-[1px] mt-[30px] bg-[#134E48]" />

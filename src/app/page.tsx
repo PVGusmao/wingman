@@ -9,6 +9,7 @@ import HeaderCardTitle from "@/components/HeaderCardTitle";
 import LBChart from "@/components/LBChart";
 import ComparisonChart from "@/components/ComparisonChart";
 import Notes from "@/components/Notes";
+import TableComponent from "@/components/Table";
 
 export default function Home() {
   return (
@@ -39,6 +40,8 @@ export default function Home() {
               </div>
 
               <HeaderCardTitle title="Orders" showSelect={false} />
+
+              <TableComponent />
 
             </section>
           </section>
