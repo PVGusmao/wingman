@@ -1,4 +1,4 @@
-import React, {SVGProps} from "react";
+import React, {SVGProps, useState, useMemo, useCallback} from "react";
 import {
   Table,
   TableHeader,
@@ -15,6 +15,19 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
 };
 
+type UserType = {
+  [key: string]: string | number;
+  id: number;
+  name: string;
+  date: string;
+  hour: string;
+  timeSpent: string;
+  orderValue: string;
+  comission: string;
+  avatar: string;
+  description: string;
+}
+
 export const columns = [
   {name: "Product", uid: "name"},
   {name: "Date", uid: "date"},
@@ -27,57 +40,58 @@ export const columns = [
 export const users = [
   {
     id: 1,
-    name: "Product Name",
+    name: "Product A",
     date: "24 Apr ´2024",
     hour: "10:24 AM",
     timeSpent: "2h 5m",
     orderValue: "$120.21",
     comission: "$55",
     avatar: "https://down-br.img.susercontent.com/file/sg-11134201-22100-03hkywfvsaiv64",
-    description: "Product description",
+    description: "Product description A",
   },
   {
     id: 2,
-    name: "Product Name",
-    date: "24 Apr ´2024",
-    hour: "10:24 AM",
-    timeSpent: "2h 5m",
-    orderValue: "$120.21",
-    comission: "$55",
+    name: "Product B",
+    date: "23 Apr ´2024",
+    hour: "09:20 AM",
+    timeSpent: "3h 10m",
+    orderValue: "$80.00",
+    comission: "$40",
     avatar: "https://down-br.img.susercontent.com/file/sg-11134201-22100-03hkywfvsaiv64",
+    description: "Product description B",
   },
   {
     id: 3,
-    name: "Product Name",
-    date: "24 Apr ´2024",
-    hour: "10:24 AM",
-    timeSpent: "2h 5m",
-    orderValue: "$120.21",
-    comission: "$55",
+    name: "Product C",
+    date: "25 Apr ´2024",
+    hour: "11:00 AM",
+    timeSpent: "1h 30m",
+    orderValue: "$200.00",
+    comission: "$100",
     avatar: "https://down-br.img.susercontent.com/file/sg-11134201-22100-03hkywfvsaiv64",
-    description: "Product description",
+    description: "Product description C",
   },
   {
     id: 4,
-    name: "Product Name",
-    date: "24 Apr ´2024",
-    hour: "10:24 AM",
-    timeSpent: "2h 5m",
-    orderValue: "$120.21",
-    comission: "$55",
+    name: "Product D",
+    date: "20 Apr ´2024",
+    hour: "08:24 AM",
+    timeSpent: "4h 20m",
+    orderValue: "$50.21",
+    comission: "$25",
     avatar: "https://down-br.img.susercontent.com/file/sg-11134201-22100-03hkywfvsaiv64",
-    description: "Product description",
+    description: "Product description D",
   },
   {
     id: 5,
-    name: "Product Name",
+    name: "Product E",
     date: "24 Apr ´2024",
     hour: "10:24 AM",
     timeSpent: "2h 5m",
     orderValue: "$120.21",
     comission: "$55",
     avatar: "https://down-br.img.susercontent.com/file/sg-11134201-22100-03hkywfvsaiv64",
-    description: "Product description",
+    description: "Product description E",
   },
 ];
 
@@ -201,17 +215,58 @@ export const EditIcon = (props: IconSvgProps) => {
     </svg>
   );
 };
+
 const statusColorMap: Record<string, ChipProps["color"]> = {
   active: "success",
   paused: "danger",
   vacation: "warning",
 };
 
-type User = (typeof users)[0];
-
 export default function TableComponent() {
-  const renderCell = React.useCallback((user: User, columnKey: React.Key) => {
-    const cellValue = user[columnKey as keyof User];
+  const [sortConfig, setSortConfig] = useState<{key: string; direction: 'asc' | 'desc'} | null>(null);
+
+  const sortedUsers = useMemo(() => {
+    if (!sortConfig) return users;
+    const sorted = [...users];
+    sorted.sort((a: UserType, b: UserType): number => {
+      const aVal = a[sortConfig.key];
+      const bVal = b[sortConfig.key];
+  
+      if (typeof aVal === 'string' && typeof bVal === 'string' && aVal.includes('$')) {
+        // Exemplo: remover símbolo de dólar e converter para número
+        const aNum = parseFloat(aVal.replace('$', ''));
+        const bNum = parseFloat(bVal.replace('$', ''));
+        return sortConfig.direction === 'asc' ? aNum - bNum : bNum - aNum;
+      }
+      if (typeof aVal === 'string') {
+        // Tentar converter data/hora ou comparar strings
+        // Exemplo simplificado: comparação lexicográfica
+        if (aVal < bVal) return sortConfig.direction === 'asc' ? -1 : 1;
+        if (aVal > bVal) return sortConfig.direction === 'asc' ? 1 : -1;
+        return 0;
+      }
+      // Caso genérico para números
+      return sortConfig.direction === 'asc' ? (aVal as number) - (bVal as number) : (bVal as number) - (aVal as number);
+    });
+    return sorted;
+  }, [sortConfig]);
+
+  const handleSort = (columnKey: string) => {
+    setSortConfig((prev) => {
+      if (prev && prev.key === columnKey) {
+        // Toggle direction
+        return {
+          key: columnKey,
+          direction: prev.direction === 'asc' ? 'desc' : 'asc'
+        };
+      } else {
+        return {key: columnKey, direction: 'asc'};
+      }
+    });
+  };
+
+  const renderCell = useCallback((user: UserType, columnKey: React.Key) => {
+    const cellValue = user[columnKey as keyof UserType];
 
     switch (columnKey) {
       case "name":
@@ -233,7 +288,7 @@ export default function TableComponent() {
         );
       case "timeSpent":
         return (
-          <p className="capitalize" color={statusColorMap[user.timeSpent]} size="sm" variant="flat">
+          <p className="capitalize" color={statusColorMap[user.timeSpent]} variant="flat">
             {cellValue}
           </p>
         );
@@ -273,15 +328,26 @@ export default function TableComponent() {
   }, []);
 
   return (
-    <Table className="px-[20px] mb-[50px]" aria-label="Example table with custom cells">
+    <Table className="px-[20px] mb-[50px]" aria-label="Example table with sorting">
       <TableHeader columns={columns}>
         {(column) => (
-          <TableColumn key={column.uid} align={column.uid === "actions" ? "center" : "start"}>
+          <TableColumn
+            key={column.uid}
+            align={column.uid === "actions" ? "center" : "start"}
+            allowsSorting
+            onClick={() => handleSort(column.uid)}
+            className="cursor-pointer"
+          >
             {column.name}
+            {sortConfig?.key === column.uid && (
+              <span style={{ marginLeft: 8 }}>
+                {sortConfig.direction === 'asc' ? '↑' : '↓'}
+              </span>
+            )}
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody items={users}>
+      <TableBody items={sortedUsers}>
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
