@@ -1,30 +1,49 @@
 'use client';
 
-import { JSX } from "react";
-import { PiChatTeardropFill } from "react-icons/pi";
 import {NextUIProvider} from "@nextui-org/react";
-import ComparisonChart from "@/components/PastPeriodChart";
-
-export interface ICardData {
-  id: number;
-  name: string;
-  value: number;
-  compValue: number;
-  icon: JSX.Element
-}
-
-const cardData: ICardData = {
-  id: 1,
-  name: "Consultations",
-  value: 24,
-  compValue: 20,
-  icon: <PiChatTeardropFill size={12} />,
-}
+import SideBar from "@/components/SideBar";
+import Header from "@/components/Header";
+import Card from "@/components/Card/Card";
+import { cardData, ICardData } from "@/utils/card";
+import HeaderCardTitle from "@/components/HeaderCardTitle";
+import LBChart from "@/components/LBChart";
+import ComparisonChart from "@/components/ComparisonChart";
+import Notes from "@/components/Notes";
 
 export default function Home() {
   return (
     <NextUIProvider>
-      <ComparisonChart />
+      <main className="flex">
+        <SideBar />
+        
+        <section className="w-full">
+          <Header />
+          <section className="w-full px-[50px] mt-[30px]">
+            <section className="flex flex-col w-full h-full shadow-small rounded-[20px]">
+              <HeaderCardTitle title="At a glance" showSelect={true} />
+              
+              <div className="flex flex-wrap gap-4 justify-between mx-[20px] mb-[50px]">
+                {cardData.map((card: ICardData) => (
+                  <Card key={card.id} cardData={card} />
+                ))}
+              </div>
+
+              <HeaderCardTitle title="Insights" showSelect={false} />
+            
+              <div className="flex justify-between mx-[20px] mt-[30px] mb-[50px]">
+                <LBChart />
+
+                <ComparisonChart />
+
+                <Notes />
+              </div>
+
+              <HeaderCardTitle title="Orders" showSelect={false} />
+
+            </section>
+          </section>
+        </section>
+      </main>
     </NextUIProvider>
   );
 }

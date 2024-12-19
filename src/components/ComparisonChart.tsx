@@ -10,7 +10,7 @@ const chartData = [
 
 export default function ComparisonChart() {
   return (
-    <Card className="h-[400px] w-[300px]">
+    <Card className="h-[455px] w-[350px]">
       <CardHeader>
         <CardTitle className="text-[#667085]">VS PAST PERIOD</CardTitle>
       </CardHeader>
@@ -45,13 +45,13 @@ export default function ComparisonChart() {
               />
               <Bar 
                 dataKey="consultations" 
-                fill="#B7EFC5"  // verde clara
+                fill="#CCFBEF"
                 radius={[4,4,0,0]}
                 barSize={30}
               />
               <Bar 
                 dataKey="ordersClosed" 
-                fill="#15B79F" // verde escura
+                fill="#134E48"
                 radius={[4,4,0,0]}
                 barSize={30}
               />

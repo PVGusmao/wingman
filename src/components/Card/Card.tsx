@@ -1,4 +1,4 @@
-import { ICardData } from "@/app/page";
+import { ICardData } from "@/utils/card";
 import PercentageChange from "./BadgePercentage";
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
 
 export default function Card({ cardData }: Props) {
   return (
-    <main className="w-[396px] h-[156px] bg-white rounded-[20px] flex flex-col justify-center px-[30px] shadow-card shadow-cardout">
+    <main className="w-[396px] h-[156px] bg-white rounded-[20px] flex flex-col justify-center px-[30px] shadow-card shadow-small">
       <div className="text-[#667085] font-[600] text-[12px] flex items-center gap-1">
         {cardData.icon}
         <p>{cardData.name.toUpperCase()}</p>

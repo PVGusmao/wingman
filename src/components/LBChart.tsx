@@ -14,7 +14,7 @@ const chartData = [
 
 export default function LBChart() {
   return (
-    <Card className="h-[400px] w-[1000px]">
+    <Card className="h-[455px] w-[1000px]">
       <CardHeader>
         <CardTitle className="text-[#667085]">CONSULTATIONS</CardTitle>
       </CardHeader>
