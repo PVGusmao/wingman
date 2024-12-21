@@ -1,12 +1,7 @@
 import { JSX } from "react";
 import { PiChatTeardropFill, PiCheckFatFill, PiCoinFill, PiCoinsFill, PiPiggyBankFill, PiTagFill } from "react-icons/pi";
 
-export interface ICardData {
-  id: number;
-  icon: JSX.Element
-}
-
-export const cardData: ICardData[] = [{
+export const iconCardData: { id: number; icon: JSX.Element}[] = [{
   id: 1,
   icon: <PiTagFill size={12} />,
 },

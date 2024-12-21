@@ -7,8 +7,6 @@ import {
   TableRow,
   TableCell,
   User,
-  Tooltip,
-  ChipProps,
 } from "@nextui-org/react";
 import api from "@/services/api";
 
@@ -149,13 +147,13 @@ export default function TableComponent() {
   }, []);
 
   return (
-    <Table className="px-[20px] mb-[50px]" aria-label="Example table with sorting" isSortable>
+    <Table className="px-[20px] mb-[50px]" aria-label="Example table with sorting">
       <TableHeader columns={columns}>
         {(column) => (
           <TableColumn
             key={column.uid}
             align={column.uid === "chat" ? "center" : "start"}
-            allowsSorting
+            allowsSorting={true} // Add this property to make the column sortable
             onClick={() => handleSort(column.uid)}
             className="cursor-pointer"
           >

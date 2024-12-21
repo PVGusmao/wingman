@@ -1,7 +1,7 @@
 "use client"
 
 import { ComposedChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line, Bar, ResponsiveContainer } from "recharts"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
 import { useEffect, useState } from "react";
 import api from "@/services/api";
 

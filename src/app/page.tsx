@@ -4,7 +4,6 @@ import {NextUIProvider} from "@nextui-org/react";
 import SideBar from "@/components/SideBar";
 import Header from "@/components/Header";
 import Card from "@/components/Card/Card";
-import { ICardData } from "@/utils/card";
 import HeaderCardTitle from "@/components/HeaderCardTitle";
 import LBChart from "@/components/LBChart";
 import ComparisonChart from "@/components/ComparisonChart";
@@ -42,7 +41,7 @@ export default function Home() {
               <HeaderCardTitle title="At a glance" showSelect={true} />
               
               <div className="flex flex-wrap gap-4 justify-between mx-[20px] mb-[50px]">
-                {loading ? "Carregando..." : data.map((card: ICardData) => (
+                {loading ? "Carregando..." : data.map((card: { id: number; name: string; value: number; compValue: number; }) => (
                   <Card key={card.id} cardData={card} />
                 ))}
               </div>
