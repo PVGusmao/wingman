@@ -31,7 +31,7 @@ export default function SideBar() {
   }
   
   return (
-    <main className="bg-[#115E56] h-[200vh] w-[60px] flex flex-col items-center">
+    <main className="bg-[#115E56] h-[230vh] w-[60px] flex flex-col items-center p-2">
       <Image className="rounded-[5px] mt-[30px]" src={logo} alt="logo" width={33} height={33} />
 
       <div className="w-[50%] h-[1px] mt-[30px] bg-[#134E48]" />

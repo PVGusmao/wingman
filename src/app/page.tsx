@@ -31,7 +31,7 @@ export default function Home() {
 
               <HeaderCardTitle title="Insights" showSelect={false} />
             
-              <div className="flex justify-between mx-[20px] mt-[30px] mb-[50px]">
+              <div className="flex justify-between mx-[20px] mt-[30px] mb-[50px] gap-4">
                 <LBChart />
 
                 <ComparisonChart />
