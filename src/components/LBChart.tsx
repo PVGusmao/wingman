@@ -31,7 +31,7 @@ export default function LBChart() {
         <div style={{ width: "100%", height: 300 }}>
           <ResponsiveContainer width="100%" height="100%">
             <ComposedChart 
-              data={chartData} 
+              data={loading ? [] : chartData} 
               margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
             >
               <CartesianGrid vertical={false} strokeDasharray="3 3" />

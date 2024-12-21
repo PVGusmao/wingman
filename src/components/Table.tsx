@@ -56,8 +56,8 @@ export default function TableComponent() {
   }, [handleData]);
 
   const sortedUsers = useMemo(() => {
-    if (!sortConfig) return tableData;
-    const sorted = [...tableData];
+    if (!sortConfig) return loading ? [] : tableData;
+    const sorted = [...(loading ? [] : tableData)];
     sorted.sort((a: UserType, b: UserType): number => {
       const aVal = a[sortConfig.key as keyof UserType];
       const bVal = b[sortConfig.key as keyof UserType];
