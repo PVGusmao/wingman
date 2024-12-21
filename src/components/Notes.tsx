@@ -3,7 +3,7 @@ import { PiChatTeardropFill } from "react-icons/pi";
 
 export default function Notes() {
   return (
-    <main className="flex flex-col justify-evenly h-[455px] w-[260px] rounded-[20px] bg-gradient-to-br from-[#15B79F] to-[#0E9382] relative overflow-hidden">
+    <main className="flex flex-col justify-evenly h-[455px] 2xl:w-[260px] w-full rounded-[20px] bg-gradient-to-br from-[#15B79F] to-[#0E9382] relative overflow-hidden">
       <section className="flex ml-[25px]">
         <PiChatTeardropFill className="text-[#CCFBEF]" />
         <p className="text-[#CCFBEF] text-[12px] font-[600]">FORECAST</p>

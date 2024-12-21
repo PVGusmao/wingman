@@ -10,28 +10,46 @@ import LBChart from "@/components/LBChart";
 import ComparisonChart from "@/components/ComparisonChart";
 import Notes from "@/components/Notes";
 import TableComponent from "@/components/Table";
+import { useEffect, useState } from "react";
+import api from "@/services/api";
 
 export default function Home() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  function handleData() {
+    setLoading(true);
+    api
+      .get("/cards")
+      .then((res) => setData(res.data))
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
+  }
+
+  useEffect(() => {
+    handleData();
+  }, []);
+
   return (
     <NextUIProvider>
-      <main className="flex">
+      <main className="flex overflow-h-hidden lg:overflow-scroll">
         <SideBar />
         
         <section className="w-full">
           <Header />
-          <section className="w-full px-[50px] mt-[30px]">
+          <section className="w-full px-2 lg:px-[50px] mt-[30px]">
             <section className="flex flex-col w-full h-full shadow-small rounded-[20px]">
               <HeaderCardTitle title="At a glance" showSelect={true} />
               
               <div className="flex flex-wrap gap-4 justify-between mx-[20px] mb-[50px]">
-                {cardData.map((card: ICardData) => (
+                {data.map((card: ICardData) => (
                   <Card key={card.id} cardData={card} />
                 ))}
               </div>
 
               <HeaderCardTitle title="Insights" showSelect={false} />
             
-              <div className="flex justify-between mx-[20px] mt-[30px] mb-[50px] gap-4">
+              <div className="flex justify-center mx-[20px] mt-[30px] mb-[50px] gap-4 2xl:flex-nowrap flex-wrap lg:justify-between">
                 <LBChart />
 
                 <ComparisonChart />

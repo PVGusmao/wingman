@@ -2,19 +2,28 @@
 
 import { ComposedChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line, Bar, ResponsiveContainer } from "recharts"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
-
-const chartData = [
-  { month: "January", incoming: 186, answered: 80, experts: 50 },
-  { month: "February", incoming: 305, answered: 200, experts: 60 },
-  { month: "March", incoming: 237, answered: 120, experts: 70 },
-  { month: "April", incoming: 73,  answered: 190, experts: 55 },
-  { month: "May", incoming: 209, answered: 130, experts: 65 },
-  { month: "June", incoming: 214, answered: 140, experts: 75 },
-]
+import { useEffect, useState } from "react";
+import api from "@/services/api";
 
 export default function LBChart() {
+  const [chartData, setChartData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  function handleData() {
+    setLoading(true);
+    api
+      .get("/chartData")
+      .then((res) => setChartData(res.data))
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
+  }
+
+  useEffect(() => {
+    handleData();
+  }, []);
+
   return (
-    <Card className="h-[455px] w-[1000px]">
+    <Card className="h-[455px] w-full 2xl:w-[800px]">
       <CardHeader>
         <CardTitle className="text-[#667085]">CONSULTATIONS</CardTitle>
       </CardHeader>

@@ -2,15 +2,28 @@
 
 import { BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts"
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
-
-const chartData = [
-  { period: "Last Week", consultations: 120, ordersClosed: 80 },
-  { period: "This Week", consultations: 140, ordersClosed: 100 },
-]
+import { useEffect, useState } from "react";
+import api from "@/services/api";
 
 export default function ComparisonChart() {
+  const [chartData, setChartData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  function handleData() {
+    setLoading(true);
+    api
+      .get("/comparisonChartData")
+      .then((res) => setChartData(res.data))
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
+  }
+
+  useEffect(() => {
+    handleData();
+  }, []);
+
   return (
-    <Card className="h-[455px] w-[350px]">
+    <Card className="h-[455px] w-full 2xl:w-[350px]">
       <CardHeader>
         <CardTitle className="text-[#667085]">VS PAST PERIOD</CardTitle>
       </CardHeader>
