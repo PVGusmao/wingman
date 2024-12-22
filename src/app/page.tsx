@@ -11,6 +11,7 @@ import Notes from "@/components/Notes";
 import TableComponent from "@/components/Table";
 import { useEffect, useState } from "react";
 import api from "@/services/api";
+require('dotenv').config();
 
 export default function Home() {
   const [data, setData] = useState([]);
