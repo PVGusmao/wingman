@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://56.124.61.53'
+  baseURL: 'https://aespartana.cloud'
 });
 
 export default api;
